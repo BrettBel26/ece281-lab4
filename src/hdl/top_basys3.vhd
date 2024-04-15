@@ -92,17 +92,82 @@ end top_basys3;
 architecture top_basys3_arch of top_basys3 is 
   
 	-- declare components and signals
-
-  
+component clock_divider is
+        generic ( constant k_DIV : natural := 2    );
+        port (     i_clk    : in std_logic;           -- basys3 clk
+                i_reset  : in std_logic;           -- asynchronous
+                o_clk    : out std_logic           -- divided (slow) clock
+        );
+ end component clock_divider;
+ 
+ component elevator_controller_fsm is
+    port(i_clk     : in  STD_LOGIC;
+            i_reset   : in  STD_LOGIC;
+            i_stop    : in  STD_LOGIC;
+            i_up_down : in  STD_LOGIC;
+            o_floor   : out STD_LOGIC_VECTOR (3 downto 0)
+    );
+   end component elevator_controller_fsm;
+ 
+ component sevenSegDecoder is
+       Port ( i_D : in STD_LOGIC_VECTOR (3 downto 0);
+              o_S : out STD_LOGIC_VECTOR (6 downto 0));
+   end component sevenSegDecoder;
+   
+ 
+ signal w_clk : std_logic;
+ signal w_floor : STD_LOGIC_VECTOR (3 downto 0);
 begin
 	-- PORT MAPS ----------------------------------------
 
+clkdiv_inst : clock_divider 		--instantiation of clock_divider to take 
+        generic map ( k_DIV => 25000000 ) -- 2 Hz clock from 100 MHz
+        port map (						  
+            i_clk   => clk,
+            i_reset => btnL or btnU,
+            o_clk   => w_clk
+        ); 	
 	
 	
+ elevator_controll_inst : elevator_controller_fsm
+        port map (						  
+     i_clk   => w_clk,
+     i_reset => btnR or btnU,
+     i_stop   => sw(1),
+     i_up_down => sw(0),
+     o_floor => w_floor
+ ); 
+ 
+  sevenseg_inst : sevenSegDecoder
+       port map(
+       i_D => w_floor,
+              o_S => seg
+              );
+              
 	-- CONCURRENT STATEMENTS ----------------------------
 	
 	-- LED 15 gets the FSM slow clock signal. The rest are grounded.
+	led(15) <= w_clk;
+	led(14) <= '0';
+	led(13) <= '0';
+	led(12) <= '0';
+	led(11) <= '0';
+	led(10) <= '0';
+	led(9) <= '0';
+	led(8) <= '0';
+	led(7) <= '0';
+	led(6) <= '0';
+	led(5) <= '0';
+	led(4) <= '0';
+	led(3) <= '0';
+	led(2) <= '0';
+	led(1) <= '0';
+	led(0) <= '0';
 	
+	an(3) <= '0';
+	an(2) <= '1';
+	an(1) <= '1';
+	an(0) <= '1';
 
 	-- leave unused switches UNCONNECTED. Ignore any warnings this causes.
 	
