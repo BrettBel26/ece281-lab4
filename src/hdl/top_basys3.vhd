@@ -129,10 +129,13 @@ component clock_divider is
    
  signal w_clk : std_logic;
  signal w_clkTDM : std_logic;
+ signal w_rst_clk : std_logic;
+ signal w_rst_fsm : std_logic;
  signal w_floor : STD_LOGIC_VECTOR (3 downto 0);
  signal w_data : STD_LOGIC_VECTOR (3 downto 0);
  signal w_tensplit : STD_LOGIC_VECTOR (3 downto 0);
  signal w_onesplit : STD_LOGIC_VECTOR (3 downto 0);
+ 
 begin
 	-- PORT MAPS ----------------------------------------
 
@@ -140,7 +143,7 @@ clkdiv_inst : clock_divider 		--instantiation of clock_divider to take
         generic map ( k_DIV => 25000000 ) -- 2 Hz clock from 100 MHz
         port map (						  
             i_clk   => clk,
-            i_reset => btnL or btnU,
+            i_reset => w_rst_clk,
             o_clk   => w_clk
         ); 	
         
@@ -148,7 +151,7 @@ TDMclkdiv_inst : clock_divider 		--instantiation of clock_divider to take
                 generic map ( k_DIV => 500 ) -- 2 Hz clock from 100 MHz
                 port map (                          
                     i_clk   => clk,
-                    i_reset => btnL or btnU,
+                    i_reset => w_rst_clk,
                     o_clk   => w_clkTDM
                 ); 
 	
@@ -156,7 +159,7 @@ TDMclkdiv_inst : clock_divider 		--instantiation of clock_divider to take
  elevator_controll_inst : elevator_controller_fsm
         port map (						  
      i_clk   => w_clk,
-     i_reset => btnR or btnU,
+     i_reset => w_rst_fsm,
      i_stop   => sw(1),
      i_up_down => sw(0),
      o_floor => w_floor
@@ -172,7 +175,7 @@ TDMclkdiv_inst : clock_divider 		--instantiation of clock_divider to take
                     generic map( k_WIDTH => 4) -- bits in input and output
                     port map( 
                            i_clk   => w_clkTDM,
-                           i_reset  => btnL or btnU,
+                           i_reset  => w_rst_clk,
                            i_D3   => w_tensplit,
                            i_D2    => w_onesplit,
                            i_D1   => "0000",
@@ -213,7 +216,8 @@ TDMclkdiv_inst : clock_divider 		--instantiation of clock_divider to take
                 "0001" when w_floor = "1111" else
                 "0001" when w_floor = "0000" else
                 "0000";                 
-	
+	w_rst_clk <= btnL or btnU;
+	w_rst_fsm <= btnR or btnU;
 	
 	--floor 16
 	-- LED 15 gets the FSM slow clock signal. The rest are grounded.
