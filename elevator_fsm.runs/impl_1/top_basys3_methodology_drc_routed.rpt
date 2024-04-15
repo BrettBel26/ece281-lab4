@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
-| Date         : Sun Apr 14 19:27:33 2024
+| Date         : Sun Apr 14 20:47:33 2024
 | Host         : C26-5CG2151GF4 running 64-bit major release  (build 9200)
 | Command      : report_methodology -file top_basys3_methodology_drc_routed.rpt -pb top_basys3_methodology_drc_routed.pb -rpx top_basys3_methodology_drc_routed.rpx
 | Design       : top_basys3
@@ -23,12 +23,12 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 21
+             Violations found: 25
 +-----------+----------+-------------------------------+------------+
 | Rule      | Severity | Description                   | Violations |
 +-----------+----------+-------------------------------+------------+
 | LUTAR-1   | Warning  | LUT drives async reset alert  | 1          |
-| TIMING-17 | Warning  | Non-clocked sequential cell   | 2          |
+| TIMING-17 | Warning  | Non-clocked sequential cell   | 6          |
 | TIMING-18 | Warning  | Missing input or output delay | 18         |
 +-----------+----------+-------------------------------+------------+
 
@@ -36,17 +36,37 @@ Table of Contents
 -----------------
 LUTAR-1#1 Warning
 LUT drives async reset alert  
-LUT cell clkdiv_inst/f_count[30]_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) clkdiv_inst/f_clk_reg/CLR, clkdiv_inst/f_count_reg[0]/CLR, clkdiv_inst/f_count_reg[10]/CLR, clkdiv_inst/f_count_reg[11]/CLR, clkdiv_inst/f_count_reg[12]/CLR, clkdiv_inst/f_count_reg[13]/CLR, clkdiv_inst/f_count_reg[14]/CLR, clkdiv_inst/f_count_reg[15]/CLR, clkdiv_inst/f_count_reg[16]/CLR, clkdiv_inst/f_count_reg[17]/CLR, clkdiv_inst/f_count_reg[18]/CLR, clkdiv_inst/f_count_reg[19]/CLR, clkdiv_inst/f_count_reg[1]/CLR, clkdiv_inst/f_count_reg[20]/CLR, clkdiv_inst/f_count_reg[21]/CLR (the first 15 of 32 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+LUT cell TDMclkdiv_inst/f_count[30]_i_2, with 2 or more inputs, drives asynchronous preset/clear pin(s) TDM4_inst/f_sel_reg[0]/CLR, TDM4_inst/f_sel_reg[1]/CLR, clkdiv_inst/f_clk_reg/CLR, clkdiv_inst/f_count_reg[0]/CLR, clkdiv_inst/f_count_reg[10]/CLR, clkdiv_inst/f_count_reg[11]/CLR, clkdiv_inst/f_count_reg[12]/CLR, clkdiv_inst/f_count_reg[13]/CLR, clkdiv_inst/f_count_reg[14]/CLR, clkdiv_inst/f_count_reg[15]/CLR, clkdiv_inst/f_count_reg[16]/CLR, clkdiv_inst/f_count_reg[17]/CLR, clkdiv_inst/f_count_reg[18]/CLR, clkdiv_inst/f_count_reg[19]/CLR, clkdiv_inst/f_count_reg[1]/CLR (the first 15 of 66 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
 Related violations: <none>
 
 TIMING-17#1 Warning
 Non-clocked sequential cell  
-The clock pin elevator_controll_inst/f_Q_reg[0]/C is not reached by a timing clock
+The clock pin TDM4_inst/f_sel_reg[0]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-17#2 Warning
 Non-clocked sequential cell  
+The clock pin TDM4_inst/f_sel_reg[1]/C is not reached by a timing clock
+Related violations: <none>
+
+TIMING-17#3 Warning
+Non-clocked sequential cell  
+The clock pin elevator_controll_inst/f_Q_reg[0]/C is not reached by a timing clock
+Related violations: <none>
+
+TIMING-17#4 Warning
+Non-clocked sequential cell  
 The clock pin elevator_controll_inst/f_Q_reg[1]/C is not reached by a timing clock
+Related violations: <none>
+
+TIMING-17#5 Warning
+Non-clocked sequential cell  
+The clock pin elevator_controll_inst/f_Q_reg[2]/C is not reached by a timing clock
+Related violations: <none>
+
+TIMING-17#6 Warning
+Non-clocked sequential cell  
+The clock pin elevator_controll_inst/f_Q_reg[3]/C is not reached by a timing clock
 Related violations: <none>
 
 TIMING-18#1 Warning

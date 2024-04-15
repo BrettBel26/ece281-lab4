@@ -17,6 +17,7 @@ proc create_report { reportName command } {
     send_msg_id runtcl-5 warning "$msg"
   }
 }
+set_param xicom.use_bs_reader 1
 create_project -in_memory -part xc7a35tcpg236-1
 
 set_param project.singleFileAddWarning.threshold 0
@@ -30,6 +31,7 @@ set_property board_part digilentinc.com:basys3:part0:1.1 [current_project]
 set_property ip_output_repo {c:/Users/Brett.Belleville/OneDrive - afacademy.af.edu/Desktop/ECE 281/Projects/Lab 4/ece281-lab4/elevator_fsm.cache/ip} [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 read_vhdl -library xil_defaultlib {
+  {C:/Users/Brett.Belleville/OneDrive - afacademy.af.edu/Desktop/ECE 281/Projects/Lab 4/ece281-lab4/src/hdl/TDM4.vhd}
   {C:/Users/Brett.Belleville/OneDrive - afacademy.af.edu/Desktop/ECE 281/Projects/Lab 4/ece281-lab4/src/hdl/clock_divider.vhd}
   {C:/Users/Brett.Belleville/OneDrive - afacademy.af.edu/Desktop/ECE 281/Projects/ICE 5/ece281-ice5/src/hdl/elevator_controller_fsm.vhd}
   {C:/Users/Brett.Belleville/OneDrive - afacademy.af.edu/Desktop/ECE 281/Projects/Lab 2/ece281-lab2/src/hdl/sevenSegDecoder.vhd}
